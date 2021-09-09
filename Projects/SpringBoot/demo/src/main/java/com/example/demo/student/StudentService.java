@@ -23,10 +23,10 @@ public class StudentService {
         return this.studentRepository.findAll();
 
     }
-    public void addNewStudent( Student student) {
+     public void addNewStudent( Student student) {
         Optional<Student> studentByEmail  = studentRepository.findStudentByEmail(student.getEmail());
         if (studentByEmail.isPresent()){
-            throw new IllegalStateException("Email Taken.");
+            throw new IllegalStateException("EAZmail Taken.");
         }
         this.studentRepository.save(student);
         //System.out.println(student);
