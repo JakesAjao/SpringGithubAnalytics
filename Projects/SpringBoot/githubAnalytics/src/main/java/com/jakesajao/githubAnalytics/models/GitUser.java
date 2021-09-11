@@ -7,16 +7,49 @@ public class GitUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
+
+    @Override
+    public String toString() {
+        return "GitUser{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", mobilephone='" + mobilephone + '\'' +
+                '}';
+    }
+
     private String gender;
     private String email;
     private String password;
     private String mobilephone;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public GitUser() {
     }
-    public GitUser(String name, String password,String gender, String email, String mobilephone) {
+    public GitUser(String firstName,String lastName, String password,String gender, String email, String mobilephone) {
         //this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
         this.password = password;
         this.email = email;
@@ -37,13 +70,6 @@ public class GitUser {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getGender() {

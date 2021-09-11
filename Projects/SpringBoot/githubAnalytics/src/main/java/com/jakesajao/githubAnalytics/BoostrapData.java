@@ -14,9 +14,9 @@ public class BoostrapData {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository repository){
         return args -> {
-            GitUser mariam = new GitUser("Mariam","mariam", "Female", "mariam@gmail.com","07066690519");
-
-            repository.saveAll(List.of(mariam));
+//            GitUser mariam = new GitUser("Mariam","mariam", "Female", "mariam@gmail.com","07066690519");
+//
+//            repository.saveAll(List.of(mariam));
 
         };
     }
