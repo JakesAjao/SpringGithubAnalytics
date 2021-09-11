@@ -37,17 +37,21 @@ public class UserRegistrationController {
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
                                       BindingResult result) {
-
+        System.out.println("Entry");
         GitUser existing = userService.findByEmail(userDto.getEmail());
         if (existing != null) {
             result.rejectValue("email", null, "There is already an account registered with that email");
         }
-
+        System.out.println("Before registration");
         if (result.hasErrors()) {
+            System.out.println("result.hasErrors(): "+result.toString());
             return "registration";
         }
 
+
         userService.save(userDto);
+        System.out.println("Save!");
+
         return "redirect:/registration?success";
     }
 }

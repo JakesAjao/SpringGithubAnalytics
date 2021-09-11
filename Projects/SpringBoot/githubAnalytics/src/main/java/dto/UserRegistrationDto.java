@@ -28,9 +28,8 @@ public class UserRegistrationDto {
     @Email
     @NotEmpty
     private String email;
-
-    @NotEmpty
-    private String gender;
+    //    @NotEmpty
+//    private String gender;
     @NotEmpty
     private String mobilephone;
 
@@ -44,12 +43,9 @@ public class UserRegistrationDto {
     public String getFirstName() {
         return firstName;
     }
-    public String getMobilephone() {
-        return mobilephone;
-    }
-    public String getGender() {
-        return gender;
-    }
+    //    public String getGender() {
+//        return gender;
+//    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -79,6 +75,7 @@ public class UserRegistrationDto {
         this.confirmPassword = confirmPassword;
     }
 
+
     public String getEmail() {
         return email;
     }
@@ -101,5 +98,12 @@ public class UserRegistrationDto {
 
     public void setTerms(Boolean terms) {
         this.terms = terms;
+    }
+
+    public void setMobilephone(String mobilephone) {
+        this.mobilephone = mobilephone;
+    }
+    public String getMobilephone() {
+        return mobilephone;
     }
 }
