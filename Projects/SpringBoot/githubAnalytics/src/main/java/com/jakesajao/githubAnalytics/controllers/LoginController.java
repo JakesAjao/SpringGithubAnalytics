@@ -27,28 +27,13 @@ public class LoginController {
 //   public String getDashboard(){
 //        return "login";
 //   }
-//    @GetMapping("/")
-//    public String root() {
-//        return "index";
-//    }
-    @PostMapping("/")
-    public String validateLoginInfo( @ModelAttribute("login") @Valid LoginFormDto loginForm, BindingResult bindingResult) {
-        System.out.println("Entry 1|Email:"+loginForm.getEmail());
-        Optional<GitUser> existing = userService.validateCredentials(loginForm.getEmail(),loginForm.getPassword());
-        System.out.println("Entry 1|Email:"+existing.toString());
-        if (existing != null) {
-            System.out.println("Invalid Entry");
-            bindingResult.rejectValue("email", null, "Invalid username or password");
-        }
-        if (bindingResult.hasErrors()) {
-            return "login";
-        }
-        //model.addAttribute("user", loginForm.getEmail());
-        return "index";
-    }
-
+   @GetMapping("/")
+  public String index() {
+      return "index";
+}
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+
         return "login";
     }
 

@@ -34,6 +34,7 @@ public class GitUser {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", mobilephone='" + mobilephone + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 
@@ -56,7 +57,8 @@ public class GitUser {
 
     public GitUser() {
     }
-    public GitUser(String firstName,String lastName, String password,String email, String mobilephone) {
+    public GitUser(String firstName,String lastName, String password,String email, String mobilephone,Collection<Role> roles) {
+
         //this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -64,6 +66,7 @@ public class GitUser {
         this.password = password;
         this.email = email;
         this.mobilephone = mobilephone;
+        this.roles = roles;
     }
 
     public Long getId() {
