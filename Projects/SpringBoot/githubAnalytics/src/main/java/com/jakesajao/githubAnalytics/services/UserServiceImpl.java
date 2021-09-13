@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.jakesajao.githubAnalytics.models.GitUser;
+import com.jakesajao.githubAnalytics.models.Role;
 import com.jakesajao.githubAnalytics.repositories.UserRepository;
 import dto.LoginFormDto;
 import dto.UserRegistrationDto;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
        // user.setGender(registration.getGender());
         user.setMobilephone(registration.getMobilephone());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
-        //user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+        user.setRoles(Arrays.asList(new Role("ROLE_USER")));
         return userRepository.save(user);
     }
 
