@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        System.out.println("user.getEmail(): "+ user.getEmail());
+        //System.out.println("user.getEmail(): "+ user.getEmail());
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(),
                 mapRolesToAuthorities(user.getRoles()));

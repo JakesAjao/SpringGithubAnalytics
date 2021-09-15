@@ -1,27 +1,5 @@
-package com.jakesajao.githubAnalytics.services;
-
-import com.jakesajao.githubAnalytics.models.GitUser;
-import dto.LoginFormDto;
-import dto.UserRegistrationDto;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.Optional;
-
-
-public interface UserService extends UserDetailsService {
-    GitUser findByEmail(String email);
-    GitUser save(UserRegistrationDto registration);
-    UserDetails loadUserByUsername(String email);
-
-}
-/*
-
 package com.jakesajao.githubAnalytics.models;
+
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-@Service
+
 public class GitUserDetails implements UserDetails {
     private GitUser user;
     public GitUserDetails(GitUser user) {
@@ -86,4 +64,3 @@ public class GitUserDetails implements UserDetails {
 //    }
 }
 
- */

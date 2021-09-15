@@ -3,6 +3,7 @@ package com.jakesajao.githubAnalytics.models;
 import javax.persistence.*;
 import java.util.Collection;
 
+
 @Entity
 public class GitUser {
     @Id
