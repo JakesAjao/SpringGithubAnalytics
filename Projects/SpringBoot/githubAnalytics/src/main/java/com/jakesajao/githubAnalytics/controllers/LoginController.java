@@ -2,31 +2,33 @@ package com.jakesajao.githubAnalytics.controllers;
 
 import com.jakesajao.githubAnalytics.models.GitUser;
 import com.jakesajao.githubAnalytics.services.UserService;
+import com.jakesajao.githubAnalytics.services.UserServiceImpl;
 import dto.LoginFormDto;
 import dto.UserRegistrationDto;
+import org.hibernate.action.internal.EntityAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
 public class LoginController {
     @Autowired
     private UserService userService;
-    @ModelAttribute("login")
-    public LoginFormDto loginFormDto() {
-        return new LoginFormDto();
-    }
-//   @GetMapping("/login")
-//   public String getDashboard(){
-//        return "login";
-//   }
+    @Autowired
+    private UserServiceImpl userServiceImpl;
    @GetMapping("/")
   public String index() {
       return "index";
@@ -35,6 +37,17 @@ public class LoginController {
     public String login(Model model) {
 
         return "login";
+    }
+    @RequestMapping(value="/index",method= RequestMethod.POST)
+    public ModelAndView index(@ModelAttribute("gitUser")GitUser gituser, HttpServletRequest request) {
+
+       // System.out.println("username from UI = "+username);
+       System.out.println("User from UI = "+gituser);
+       ModelAndView modelAndView = new ModelAndView();
+       modelAndView.setViewName("index");
+       modelAndView.addObject("user",gituser);
+
+        return modelAndView;
     }
 
     @GetMapping("/user")

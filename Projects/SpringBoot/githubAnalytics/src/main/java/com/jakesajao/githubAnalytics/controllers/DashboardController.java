@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class DashboardController {
-    @PostMapping("/index")
-    public String getDashboard(){
-        return "index";
-    }
+
+
 }
