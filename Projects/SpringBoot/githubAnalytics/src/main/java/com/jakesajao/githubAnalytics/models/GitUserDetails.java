@@ -59,8 +59,8 @@ public class GitUserDetails implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
-//    public String getFullName(){
-//      return  user.get
-//    }
+    public String getFullName(){
+        return  user.getFirstName()+" "+user.getLastName();
+   }
 }
 

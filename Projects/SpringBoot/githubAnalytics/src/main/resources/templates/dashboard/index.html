@@ -69,7 +69,8 @@
                         <button class="close"></button>
                     </div>
                     <p>
-                        Welcome <span sec:authentication="principal.username"></span>
+                      Welcome <span th:text="${gituser}">User</span>
+<!--                        Welcome <span sec:authentication="principal.username"></span>-->
                     </p>
                     <ul class="header-menu nav">
                         <li class="nav-item">
