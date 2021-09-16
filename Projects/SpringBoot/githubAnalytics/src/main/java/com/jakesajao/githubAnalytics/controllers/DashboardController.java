@@ -1,6 +1,7 @@
 package com.jakesajao.githubAnalytics.controllers;
 
 import com.jakesajao.githubAnalytics.models.GitUser;
+import com.jakesajao.githubAnalytics.models.Root;
 import com.jakesajao.githubAnalytics.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 @Controller
 public class DashboardController {
@@ -50,11 +52,11 @@ public @ResponseBody ArrayList<Object> getStarsPerLang(@PathVariable String user
     headers.set("User-Agent", "profile-analyzer");
     HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-    ResponseEntity<Object[]> repos = restTemplate.exchange(URL, HttpMethod.GET, entity, Object[].class);
+    ResponseEntity<Root[]> repos = restTemplate.exchange(URL, HttpMethod.GET, entity, Root[].class);
 
-    Repo[] arr = repos.getBody();
+    Root[] arr = repos.getBody();
 
-    for (Repo repo : arr) {
+    for (Root repo : arr) {
         languages.add(repo.getLanguage());
     }
 
@@ -64,7 +66,7 @@ public @ResponseBody ArrayList<Object> getStarsPerLang(@PathVariable String user
     // Synthesize output.
     for(String language : languages) {
         int count = 0;
-        for(Repo repo: arr){
+        for(Root repo: arr){
             if(repo.getLanguage().equals(language)){
                 count++;
             }
