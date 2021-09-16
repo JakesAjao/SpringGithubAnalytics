@@ -27,15 +27,15 @@ public class LoginController {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-    @RequestMapping(value="/index",method= RequestMethod.POST)
-    public ModelAndView index(@ModelAttribute("user")GitUser gituser) {
-        System.out.println("Username from UI = "+gituser.getEmail());
-        GitUser gitUser = userRepository.findByEmail(gituser.getEmail());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
-        modelAndView.addObject("gituser",gitUser.getFirstName() +" "+ gitUser.getLastName());
-        return modelAndView;
-    }
+//    @RequestMapping(value="/index",method= RequestMethod.POST)
+//    public ModelAndView index(@ModelAttribute("user")GitUser gituser) {
+//        System.out.println("Username from UI = "+gituser.getEmail());
+//        GitUser gitUser = userRepository.findByEmail(gituser.getEmail());
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("index");
+//        modelAndView.addObject("gituser",gitUser.getFirstName() +" "+ gitUser.getLastName());
+//        return modelAndView;
+//    }
     @GetMapping("/login")
     public String login(Model model){
 
