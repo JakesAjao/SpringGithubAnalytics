@@ -631,11 +631,13 @@
                                                 <th class="text-center">Id</th>
                                                 <th class="text-center">Name</th>
                                                 <th class="text-center">Description</th>
+                                                <th class="text-center">Action</th>
                                             </tr>
                                             <tr th:each="repo: ${repolist}">
                                                 <td th:text="${repo.id}">2</td>
                                                 <td th:text="${repo.name}">Spring in Action</td>
                                                 <td th:text="${repo.description}">Wrox</td>
+                                                <td>Edit</td>
                                             </tr>
 
                                             </tr>
