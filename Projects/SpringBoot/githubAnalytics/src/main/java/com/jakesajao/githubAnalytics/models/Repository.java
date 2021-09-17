@@ -3,9 +3,20 @@ package com.jakesajao.githubAnalytics.models;
 public class Repository {
     private int id;
     private String name;
+
+    @Override
+    public String toString() {
+        return "Repository{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     private String description;
 
-    public Repository(String name, String description) {
+    public Repository(int id,String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
     }

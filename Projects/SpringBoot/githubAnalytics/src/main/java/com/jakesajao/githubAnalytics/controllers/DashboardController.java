@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 @Controller
 public class DashboardController {
@@ -31,19 +32,18 @@ public class DashboardController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
-        ArrayList<Repository>  repoList = getUserRepo(gitUser.getFirstName()+gitUser.getLastName());
+        List<Repository> repoList = getUserRepo(gitUser.getFirstName()+gitUser.getLastName());
+        modelAndView.addObject("repolist",repoList);
         modelAndView.addObject("gituser",name);
-        modelAndView.addObject("repoList",repoList);
+
         return modelAndView;
     }
 
-private ArrayList<Repository>  getUserRepo(String username) {
+private List<Repository>  getUserRepo(String username) {
 
-    ArrayList<Object> output = new ArrayList<>();
     ArrayList<Repository> repoList = new ArrayList<>();
-    ArrayList<Integer> star_counts = new ArrayList<>();
 
-System.out.println("Repo model username: "+username);
+    System.out.println("Repo model username: "+username);
     String URL = Git_URL+"/users/" + username +"/repos?type=owner";
 
     RestTemplate restTemplate = new RestTemplate();
@@ -57,11 +57,13 @@ System.out.println("Repo model username: "+username);
     Root[] arr = repos.getBody();
     String description =null;
     String name = null;
+    int id = 0;
     for (Root repo : arr) {
+        id  =  ++id;
         description = repo.getDescription();
-        System.out.println("Git hub Data description: "+description);
         name = repo.getName();
-        Repository repoData = new Repository(name,description);
+        Repository repoData = new Repository(id,name,description);
+        System.out.println("Git hub Data Repository: "+repoData);
         repoList.add(repoData);
     }
     //model.addAttribute("repolist",repoList);
