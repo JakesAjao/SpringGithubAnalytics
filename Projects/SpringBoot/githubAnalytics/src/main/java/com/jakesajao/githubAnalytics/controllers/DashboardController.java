@@ -63,7 +63,7 @@ private List<Repository>  getUserRepo(String username) {
         description = repo.getDescription();
         name = repo.getName();
         Repository repoData = new Repository(id,name,description);
-        System.out.println("Git hub Data Repository: "+repoData);
+        //System.out.println("Git hub Data Repository: "+repoData);
         repoList.add(repoData);
     }
     //model.addAttribute("repolist",repoList);
