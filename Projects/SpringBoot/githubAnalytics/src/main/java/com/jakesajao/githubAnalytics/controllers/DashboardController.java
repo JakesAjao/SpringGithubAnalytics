@@ -22,12 +22,25 @@ public class DashboardController {
     public String index(){
         return "index";
     }
+//    @RequestMapping(value="/index",method= RequestMethod.POST)
+//    public ModelAndView index(@ModelAttribute("user") GitUser gituser) {
+//        System.out.println("Username from UI = "+gituser.getEmail());
+//        GitUser gitUser = userRepository.findByEmail(gituser.getEmail());
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("index");
+//        String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
+//        List<Repository> repoList = httpconnections.getUserRepo(gitUser.getFirstName()+gitUser.getLastName());
+//        modelAndView.addObject("repolist",repoList);
+//        modelAndView.addObject("gituser",name);
+//
+//        return modelAndView;
+//    }
     @RequestMapping(value="/index",method= RequestMethod.POST)
     public ModelAndView index(@ModelAttribute("user") GitUser gituser) {
         System.out.println("Username from UI = "+gituser.getEmail());
         GitUser gitUser = userRepository.findByEmail(gituser.getEmail());
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("repository");
         String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
         List<Repository> repoList = httpconnections.getUserRepo(gitUser.getFirstName()+gitUser.getLastName());
         modelAndView.addObject("repolist",repoList);
@@ -36,19 +49,19 @@ public class DashboardController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/repository",method= RequestMethod.POST)
-    public ModelAndView repository(@ModelAttribute("user") GitUser gituser,
+    @RequestMapping(value="/repository/details/{name2}",method= RequestMethod.GET)
+    public String repository(@ModelAttribute("user") GitUser gituser,
                                    @PathVariable("name2")String name2) {
         System.out.println("Username from UI = "+gituser.getEmail());
         GitUser gitUser = userRepository.findByEmail(gituser.getEmail());
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("repository");
         String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
         List<Repository> repository = httpconnections.repositoryByRepoName(gitUser.getFirstName()+gitUser.getLastName(),name2);
         modelAndView.addObject("repository",repository);
         modelAndView.addObject("gituser",name);
 
-        return modelAndView;
+        return "repository";
     }
 
 }
