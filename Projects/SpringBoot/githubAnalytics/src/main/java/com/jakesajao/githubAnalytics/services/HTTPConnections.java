@@ -47,7 +47,7 @@ public class HTTPConnections {
     public List<Repository> repositoryByRepoName(String username,String name){
         System.out.println("Username from UI 2 = "+username);
         ArrayList<Repository> repoList = new ArrayList<>();
-        System.out.println("Repo model username: "+username);
+        System.out.println("Repository html model username: "+username);
         String URL = Git_URL+"/repos/" + username +"/"+name;
 
         RestTemplate restTemplate = new RestTemplate();
@@ -67,7 +67,7 @@ public class HTTPConnections {
             description = repo.getDescription();
             name2 = repo.getName();
             Repository repoData = new Repository(id,name2,description);
-            //System.out.println("Git hub Data Repository: "+repoData);
+            System.out.println("Git hub Data Repository html: "+repoData);
             repoList.add(repoData);
         }
         return repoList;

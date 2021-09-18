@@ -61,7 +61,7 @@
 				<div th:if="${param.logout}">
 					<div class="alert alert-info">You have been logged out.</div>
 				</div>
-				<form th:action="@{/index}" th:object="${user}"   class="login100-form validate-form p-b-33 p-t-5" method="post">
+				<form th:action="@{/home}" th:object="${user}"   class="login100-form validate-form p-b-33 p-t-5" method="post">
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter firstName">
 						<input class="input100" type="text" id="email" name="email"  placeholder="Username" autofocus required>
