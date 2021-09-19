@@ -61,7 +61,7 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("repository");
 
-        List<Repository> repository = httpconnections.repositoryByRepoName(git,repo);
+        Repository repository = httpconnections.repositoryByRepoName(git,repo);
         modelAndView.addObject("repository",repository);
         modelAndView.addObject("gituser",repo);
         return modelAndView;

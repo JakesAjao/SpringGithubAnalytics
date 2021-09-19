@@ -20,6 +20,9 @@ public class Repository {
         this.name = name;
         this.description = description;
     }
+    public Repository(){
+
+    }
 
 
     public int getId() {

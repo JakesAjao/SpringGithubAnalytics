@@ -44,33 +44,38 @@ public class HTTPConnections {
         return repoList;
 
     }
-    public List<Repository> repositoryByRepoName(String username,String name){
-        System.out.println("Username from UI 2 = "+username);
-        ArrayList<Repository> repoList = new ArrayList<>();
-        System.out.println("Repository html model username: "+username);
-        String URL = Git_URL+"/repos/" + username +"/"+name;
+    public Repository repositoryByRepoName(String username,String name) {
+        try {
+            System.out.println("Username from UI 2 = " + username);
+            Repository repoList = new Repository();
+            System.out.println("Repository html model username: " + username);
+            String URL = Git_URL + "/repos/" + username + "/" + name;
 
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("User-Agent", "profile-analyzer");
-        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("User-Agent", "profile-analyzer");
+            HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        ResponseEntity<Root[]> repos = restTemplate.exchange(URL, HttpMethod.GET, entity, Root[].class);
-        System.out.println("Git hub Data: "+repos);
+            ResponseEntity<Root> repos = restTemplate.exchange(URL, HttpMethod.GET, entity, Root.class);
+            System.out.println("Git hub Data: " + repos);
 
-        Root[] arr = repos.getBody();
-        String description =null;
-        String name2 = null;
-        int id = 0;
-        for (Root repo : arr) {
-            id  =  ++id;
-            description = repo.getDescription();
-            name2 = repo.getName();
-            Repository repoData = new Repository(id,name2,description);
-            System.out.println("Git hub Data Repository html: "+repoData);
-            repoList.add(repoData);
+            Root arr = repos.getBody();
+            String description = null;
+            String name2 = null;
+            int id = 0, i = 0;
+            //for (Root repo : arr) {
+                id = ++i;
+                description = arr.getDescription();
+                name2 = arr.getName();
+                Repository repoData = new Repository(id, name2, description);
+                System.out.println("Git hub Data Repository html: " + repoData);
+                //repoList.add(repoData);
+            //}
+            return repoList;
+        } catch (Exception e) {
+            System.out.println("Exception : "+e);
         }
-        return repoList;
+        return null;
     }
 
 }
