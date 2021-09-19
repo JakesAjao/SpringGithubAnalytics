@@ -56,7 +56,7 @@ public class HTTPConnections {
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
         ResponseEntity<Root[]> repos = restTemplate.exchange(URL, HttpMethod.GET, entity, Root[].class);
-        //System.out.println("Git hub Data: "+repos);
+        System.out.println("Git hub Data: "+repos);
 
         Root[] arr = repos.getBody();
         String description =null;

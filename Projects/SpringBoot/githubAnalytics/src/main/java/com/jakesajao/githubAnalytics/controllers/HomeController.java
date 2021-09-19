@@ -43,24 +43,28 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
+        String email = gitUser.getEmail();
         List<Repository> repoList = httpconnections.getUserRepo(gitUser.getFirstName()+gitUser.getLastName());
         modelAndView.addObject("repolist",repoList);
         modelAndView.addObject("gituser",name);
+        modelAndView.addObject("git",gitUser.getFirstName()+gitUser.getLastName());
 
         return modelAndView;
     }
-    @GetMapping("/repository/details/{name2}")
-    public String repository(@ModelAttribute("user") GitUser gituser,@PathVariable("name2")String name2) {
-        System.out.println("Repository name= "+name2);
-        System.out.println("Repository first name= "+gituser.getFirstName());
-        GitUser gitUser = userRepository.findByEmail(gituser.getEmail());
+    //   "/repository/user/{git}/name/{reponame}**",
+    @GetMapping("/repository/user/{git}/name/{repo}")
+    public ModelAndView repository(@PathVariable("git") String git,@PathVariable("repo")String repo) {
+        System.out.println("Repository name= "+repo);
+        System.out.println("Repository gituser= "+git);
+        //GitUser gitUser = userRepository.findByEmail(userobject.getEmail());
+        //System.out.println("Repository userobject 2= "+gitUser);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("repository");
-        String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
-        List<Repository> repository = httpconnections.repositoryByRepoName(gitUser.getFirstName()+gitUser.getLastName(),name2);
+
+        List<Repository> repository = httpconnections.repositoryByRepoName(git,repo);
         modelAndView.addObject("repository",repository);
-        modelAndView.addObject("gituser",name);
-        return "repository";
+        modelAndView.addObject("gituser",repo);
+        return modelAndView;
     }
     @GetMapping("/repository")
     public String repository(){
