@@ -54,4 +54,10 @@ public class HomeController {
         return "repository";
     }
 
+    @GetMapping("/login?logout")
+    public String logout(){
+        System.out.println("Log out...1");
+        return "login";
+    }
+
 }

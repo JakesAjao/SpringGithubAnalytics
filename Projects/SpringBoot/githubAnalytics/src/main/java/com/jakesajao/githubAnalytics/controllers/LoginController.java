@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -34,18 +35,18 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model){
-
         return "login";
     }
     @GetMapping("/")
-    public ModelAndView root() {
+    public ModelAndView home() {
         String currentUserName = null;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            currentUserName = authentication.getName();
-        }
-//        System.out.println(" root Principal Username= "+currentUserName);
-        GitUser gitUser = userRepository.findByEmail(currentUserName);
+        GitUser gitUser = null;
+        currentUserName = getUsername();
+        if (currentUserName!=null)
+         gitUser = userRepository.findByEmail(currentUserName);
+        else
+            throw new NullPointerException();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
@@ -57,6 +58,20 @@ public class LoginController {
 
         return modelAndView;
     }
+
+    public String getUsername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return authentication.getName();
+        }
+        else
+            return null;
+    }
+//    @GetMapping("/login?logout")
+//    public String logout(){
+//        System.out.println("Log out...2");
+//        return "login";
+//    }
 
 //    @RequestMapping(value="/login",method= RequestMethod.POST)
 //    public ModelAndView index(@ModelAttribute("user") GitUser gituser) {

@@ -49,7 +49,8 @@
             <div class="card-body">
                 <h2 class="title">Registration Info</h2>
                 <a class="navbar-brand" href="#" th:href="@{/}">Registration and
-                    Login Module</a>
+                    Login Module
+                </a>
                 <div th:if="${param.success}">
                     <div style="color:green">You've successfully registered to our awesome app!</div>
                 </div>
@@ -64,23 +65,7 @@
                         <input class="input--style-3" type="text"  id="lastName"  th:field="*{lastName}" placeholder="Last Name" name="lastName">
                         <p style="color:red" th:each="error: ${#fields.errors('lastName')}" th:text="${error}">Validation error</p>
                     </div>
-<!--                    <div class="input-group" th:classappend="${#fields.hasErrors('gender')}? 'has-error':''">-->
-<!--                        <input class="input&#45;&#45;style-3 js-datepicker" type="text" id="gender" placeholder="gender" name="gender">-->
-<!--                        <p class="error-message" th:each="error: ${#fields.errors('gender')}" th:text="${error}">Validation error</p>-->
-<!--                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>-->
-<!--                    </div>-->
-<!--                    <div class="input-group" >-->
-<!--                        <div class="rs-select2 js-select-simple select&#45;&#45;no-search">-->
-<!--                            <select name="gender" id="gender" placeholder="gender">-->
-<!--                                <option disabled="disabled" selected="selected">Gender</option>-->
-<!--                                <option>Male</option>-->
-<!--                                <option>Female</option>-->
-<!--                                <option>Other</option>-->
-<!--                            </select>-->
-<!--                            <div class="select-dropdown"></div>-->
-<!--                            <p class="error-message" th:each="error: ${#fields.errors('gender')}" th:text="${error}">Validation error</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
+
                     <div class="input-group" th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
                         <input class="input--style-3" id="email" type="email" placeholder="Email" name="email">
                         <p style="color:red" th:each="error: ${#fields.errors('email')}" th:text="${error}">Validation error</p>
