@@ -37,21 +37,7 @@ public class HomeController {
 //
 //        return modelAndView;
 //    }
-    @RequestMapping(value="/home",method= RequestMethod.POST)
-    public ModelAndView index(@ModelAttribute("user") GitUser gituser) {
-        //System.out.println("Username from UI = "+gituser.getEmail());
-        GitUser gitUser = userRepository.findByEmail(gituser.getEmail());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
-        String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
-        String email = gitUser.getEmail();
-        List<Repository> repoList = httpconnections.getUserRepo(gitUser.getFirstName()+gitUser.getLastName());
-        modelAndView.addObject("repolist",repoList);
-        modelAndView.addObject("gituser",name);
-        modelAndView.addObject("git",gitUser.getFirstName()+gitUser.getLastName());
 
-        return modelAndView;
-    }
     @GetMapping("/repository/user/{git}/name/{repo}")
     public ModelAndView repository(@PathVariable("git") String git,@PathVariable("repo")String repo) {
 
@@ -60,7 +46,7 @@ public class HomeController {
 
         List<Committer> repository = httpconnections.repositoryByRepoName(git,repo);
         modelAndView.addObject("repository",repository);
-        modelAndView.addObject("gituser",repo);
+        modelAndView.addObject("gituser",git);
         return modelAndView;
     }
     @GetMapping("/repository")

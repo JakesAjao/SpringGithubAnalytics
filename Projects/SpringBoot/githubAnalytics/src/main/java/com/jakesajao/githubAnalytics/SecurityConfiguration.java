@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(
-                        "/home**",
+//                        "/home**",
                         "/registration**",
                         "/repository**",
                         "/repository/user/{git}/name/{repo}**",
