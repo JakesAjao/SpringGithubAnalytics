@@ -1,5 +1,6 @@
 package com.jakesajao.githubAnalytics.controllers;
 
+import com.jakesajao.githubAnalytics.models.Committer;
 import com.jakesajao.githubAnalytics.models.GitUser;
 import com.jakesajao.githubAnalytics.models.Repository;
 import com.jakesajao.githubAnalytics.repositories.UserRepository;
@@ -51,17 +52,13 @@ public class HomeController {
 
         return modelAndView;
     }
-    //   "/repository/user/{git}/name/{reponame}**",
     @GetMapping("/repository/user/{git}/name/{repo}")
     public ModelAndView repository(@PathVariable("git") String git,@PathVariable("repo")String repo) {
-        System.out.println("Repository name= "+repo);
-        System.out.println("Repository gituser= "+git);
-        //GitUser gitUser = userRepository.findByEmail(userobject.getEmail());
-        //System.out.println("Repository userobject 2= "+gitUser);
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("repository");
 
-        List<Repository> repository = httpconnections.repositoryByRepoName(git,repo);
+        List<Committer> repository = httpconnections.repositoryByRepoName(git,repo);
         modelAndView.addObject("repository",repository);
         modelAndView.addObject("gituser",repo);
         return modelAndView;

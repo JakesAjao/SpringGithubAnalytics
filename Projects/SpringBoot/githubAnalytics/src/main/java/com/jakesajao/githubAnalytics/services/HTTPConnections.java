@@ -37,57 +37,50 @@ public class HTTPConnections {
             description = repo.getDescription();
             name2 = repo.getName();
             Repository repoData = new Repository(id, name2, description);
-            System.out.println("Git hub Data Repository html: " + repoData);
+
             repoList.add(repoData);
         }
-        //model.addAttribute("repolist",repoList);
+        //System.out.println("Git hub Data Repository html: " + repoList.size());
         return repoList;
 
     }
     public List<Committer> repositoryByRepoName(String username,String name) {
         try {
-            System.out.println("Username from UI 2 = " + username);
+            System.out.println("client name= "+username);
+            System.out.println("client gituser= "+name);
             ArrayList<Committer> repoList = new ArrayList<>();
             //System.out.println("Repository html model username: " + username);
-            String URL = Git_URL + "/repos/" + "username" + "/" + name;
+            String URL = Git_URL + "/repos/" + username + "/" + name+"/commits?per_page=30";
 
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.set("User-Agent", "profile-analyzer");
             HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-
+            System.out.println("Fetch the Repository json from Git.");
             ResponseEntity<Roots[]> repos = restTemplate.exchange(URL, HttpMethod.GET, entity, Roots[].class);
             System.out.println("Git hub Data: " + repos);
 
-            //Roots[] arr = repos.getBody();
-//            String description = null;
-//            String name2 = null;
-//            long id = 0, i = 0;
-//            for (Root repo : arr) {
-//                id = repo.getId();
-//                description = repo.getDescription();
-//                name2 = repo.getName();
-//                Repository repoData = new Repository(id, name2, description);
-//                System.out.println("Git hub Data Repository html: " + repoData);
-//                repoList.add(repoData);
-//            }
             Roots[] arr = repos.getBody();
             String email =null;
             String name2 = null;
             Date date = null;
             long id = 0;
+
             for (Roots roots : arr) {
                 Commit commits  = roots.getCommit();
                 Committer committer = commits.committer;
-                name = committer.name;
-                email = committer.email;
-                date = committer.date;
-                Committer commitData = new Committer(name2,email,date);
-                System.out.println("Git hub Data commitData: "+commitData);
-                repoList.add(commitData);
+                id = committer.getId();
+                name2 = committer.getName();
+                email = committer.getEmail();
+                date = committer.getDate();
+                //Committer commitData = new Committer(name2,email,date);
+                System.out.println("Git hub Data commitData: "+committer);
+                repoList.add(committer);
             }
             return repoList;
         } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
 
         }
         return null;

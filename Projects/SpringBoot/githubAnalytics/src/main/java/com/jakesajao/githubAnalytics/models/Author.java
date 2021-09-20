@@ -25,6 +25,31 @@ public class Author{
     public String gists_url;
     public String starred_url;
     public String subscriptions_url;
+
+//    public Author(String name, String email, Date date, String login, int id, String node_id, String avatar_url, String gravatar_id, String url, String html_url, String followers_url, String following_url, String gists_url, String starred_url, String subscriptions_url, String organizations_url, String repos_url, String events_url, String received_events_url, String type, boolean site_admin) {
+//        this.name = name;
+//        this.email = email;
+//        this.date = date;
+//        this.login = login;
+//        this.id = id;
+//        this.node_id = node_id;
+//        this.avatar_url = avatar_url;
+//        this.gravatar_id = gravatar_id;
+//        this.url = url;
+//        this.html_url = html_url;
+//        this.followers_url = followers_url;
+//        this.following_url = following_url;
+//        this.gists_url = gists_url;
+//        this.starred_url = starred_url;
+//        this.subscriptions_url = subscriptions_url;
+//        this.organizations_url = organizations_url;
+//        this.repos_url = repos_url;
+//        this.events_url = events_url;
+//        this.received_events_url = received_events_url;
+//        this.type = type;
+//        this.site_admin = site_admin;
+//    }
+
     public String organizations_url;
     public String repos_url;
     public String events_url;
@@ -32,24 +57,41 @@ public class Author{
     public String type;
     public boolean site_admin;
 }
-
-
-class Tree{
-    public String sha;
-    public String url;
-}
-
-class Verification{
-    public boolean verified;
-    public String reason;
-    public Object signature;
-    public Object payload;
-}
-
 class Parent{
     public String sha;
     public String url;
     public String html_url;
+
+
+    public String getSha() {
+        return sha;
+    }
+
+    public void setSha(String sha) {
+        this.sha = sha;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getHtml_url() {
+        return html_url;
+    }
+
+    public void setHtml_url(String html_url) {
+        this.html_url = html_url;
+    }
+//    public Parent(String sha, String url, String html_url) {
+//        this.sha = sha;
+//        this.url = url;
+//        this.html_url = html_url;
+//    }
+
 }
 
 

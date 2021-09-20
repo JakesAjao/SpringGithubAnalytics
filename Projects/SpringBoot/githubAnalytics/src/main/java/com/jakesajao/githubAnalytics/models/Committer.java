@@ -3,11 +3,11 @@ package com.jakesajao.githubAnalytics.models;
 import java.util.Date;
 
 public class Committer {
+    public long id;
     public String name;
     public String email;
     public Date date;
     public String login;
-    public int id;
     public String node_id;
     public String avatar_url;
     public String gravatar_id;
@@ -25,11 +25,48 @@ public class Committer {
     public String type;
     public boolean site_admin;
 
-    public Committer(String name,String email, Date date){
+    public Committer(){
+        
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
         this.date = date;
     }
+
+
+//    public Committer(String name,String email, Date date){
+//        this.name = name;
+//        this.email = email;
+//        this.date = date;
+//    }
 
     @Override
     public String toString() {

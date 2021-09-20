@@ -16,17 +16,15 @@
                 <div class="main-card mb-3 card">
                     <div class="table-responsive" style="height: 600px;overflow: scroll;">
                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-
                             <tr>
-                                <th class="text-center">Id</th>
                                 <th class="text-center">Name</th>
-                                <th class="text-center">Description</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Date</th>
                             </tr>
-                            <tr th:each="repo: ${repolist}">
-                                <td th:text="${repo.id}">2</td>
-                                <td th:text="${repo.name}">Spring in Action</td>
-                                <td th:text="${repo.description}">Spring in Action</td>
-
+                            <tr th:each="repo: ${repository}">
+                                <td class="text-center" th:text="${repo.name}">Spring in Action</td>
+                                <td class="text-center" th:text="${repo.email}">Spring in Action</td>
+                                <td class="text-center" th:text="${repo.date}">Spring in Action</td>
                             </tr>
 
                             </tr>

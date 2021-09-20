@@ -1,5 +1,4 @@
 package com.jakesajao.githubAnalytics.models;
-
 import java.util.List;
 
 public class Roots{
@@ -12,6 +11,22 @@ public class Roots{
     public Author author;
     public Committer committer;
     public List<Parent> parents;
+
+    public Roots(){
+
+    }
+
+    public Roots(String sha, String node_id, Commit commit, String url, String html_url, String comments_url, Author author, Committer committer, List<Parent> parents) {
+        this.sha = sha;
+        this.node_id = node_id;
+        this.commit = commit;
+        this.url = url;
+        this.html_url = html_url;
+        this.comments_url = comments_url;
+        this.author = author;
+        this.committer = committer;
+        this.parents = parents;
+    }
 
     public String getSha() {
         return sha;
