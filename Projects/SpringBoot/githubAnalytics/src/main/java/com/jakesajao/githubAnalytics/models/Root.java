@@ -8,7 +8,7 @@ Root root = om.readValue(myJsonString), Root.class); */
 import java.util.Date;
 
 public class Root{
-    public int id;
+    public long id;
     public String node_id;
     public String name;
     public String full_name;
@@ -78,11 +78,11 @@ public class Root{
     public int open_issues_count;
     public Object license;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

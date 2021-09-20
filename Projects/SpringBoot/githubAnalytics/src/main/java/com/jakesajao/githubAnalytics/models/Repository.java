@@ -1,7 +1,7 @@
 package com.jakesajao.githubAnalytics.models;
 
 public class Repository {
-    private int id;
+    private long id;
     private String name;
 
     @Override
@@ -15,7 +15,7 @@ public class Repository {
 
     private String description;
 
-    public Repository(int id,String name, String description) {
+    public Repository(long id,String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -25,7 +25,7 @@ public class Repository {
     }
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
