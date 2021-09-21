@@ -1,8 +1,12 @@
 package com.jakesajao.githubAnalytics.services;
 
+import com.jakesajao.githubAnalytics.models.Committer;
 import com.jakesajao.githubAnalytics.models.GitUser;
 import dto.LoginFormDto;
 import dto.UserRegistrationDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.User;
@@ -10,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -17,7 +22,7 @@ public interface UserService extends UserDetailsService {
     GitUser findByEmail(String email);
     GitUser save(UserRegistrationDto registration);
     UserDetails loadUserByUsername(String email);
-
+    Page<Committer> findPaginated(Pageable pageable, List<Committer> gitUserList);
 }
 /*
 
