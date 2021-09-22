@@ -2,6 +2,7 @@ package com.jakesajao.githubAnalytics.services;
 
 import com.jakesajao.githubAnalytics.models.Committer;
 import com.jakesajao.githubAnalytics.models.GitUser;
+import com.jakesajao.githubAnalytics.models.Paged;
 import dto.LoginFormDto;
 import dto.UserRegistrationDto;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,8 @@ public interface UserService extends UserDetailsService {
     GitUser findByEmail(String email);
     GitUser save(UserRegistrationDto registration);
     UserDetails loadUserByUsername(String email);
-    Page<Committer> findPaginated(Pageable pageable, List<Committer> gitUserList);
+    Page<Committer> findPaginated(Pageable pageable,List<Committer> repository);
+    Paged<Committer> getPage(int pageNumber, int size,String git,String repo);
 }
 /*
 

@@ -4,17 +4,12 @@ import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.jakesajao.githubAnalytics.models.Committer;
-import com.jakesajao.githubAnalytics.models.GitUser;
-import com.jakesajao.githubAnalytics.models.Role;
+import com.jakesajao.githubAnalytics.models.*;
 import com.jakesajao.githubAnalytics.repositories.UserRepository;
 import dto.LoginFormDto;
 import dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private UserService userService;
+    private HTTPConnections httpconnections = new HTTPConnections();
 
     public GitUser findByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -97,6 +96,23 @@ public class UserServiceImpl implements UserService {
 
         return committersPage;
     }
+    @Override
+    public Paged<Committer> getPage(int pageNumber, int size,String git,String repo) {
+        //PageRequest request = PageRequest.of(pageNumber - 1, size, new Sort(Sort.Direction.ASC, "id"));
+        //Page<Committer> committerPageOld = committerRepository.findAll(Sort.by(Sort.Direction.DESC, "id");
+        System.out.println("getPage 1.");
+        List<Committer> repository = httpconnections.repositoryByRepoName(git,repo);
+        Page<Committer> committerPage = userService.findPaginated(PageRequest.of(pageNumber - 1, size),
+                repository);
+        System.out.println("getPage 2.");
+        return new Paged<Committer>(committerPage, Paging.of(committerPage.getTotalPages(), pageNumber, size));
+    }
+//    @Override
+//    public Paged<Committer> getPage(int pageNumber, int size,UserService userService) {
+//        PageRequest request = PageRequest.of(pageNumber - 1, size, new Sort(Sort.Direction.ASC, "id"));
+//        Page<Committer> postPage = userService.findAll(request);
+//        return new Paged<>(postPage, Paging.of(postPage.getTotalPages(), pageNumber, size));
+//    }
 }
 
 

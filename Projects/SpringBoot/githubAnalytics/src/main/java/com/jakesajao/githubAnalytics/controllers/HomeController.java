@@ -1,17 +1,12 @@
 package com.jakesajao.githubAnalytics.controllers;
 
-import com.jakesajao.githubAnalytics.models.Committer;
-import com.jakesajao.githubAnalytics.models.GitUser;
-import com.jakesajao.githubAnalytics.models.Repository;
+import com.jakesajao.githubAnalytics.models.*;
 import com.jakesajao.githubAnalytics.repositories.UserRepository;
 import com.jakesajao.githubAnalytics.services.HTTPConnections;
 import com.jakesajao.githubAnalytics.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +21,7 @@ import java.util.stream.IntStream;
 public class HomeController {
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private UserService userService;
 
@@ -61,42 +57,14 @@ public class HomeController {
         modelAndView.addObject("gituser",git);
         return modelAndView;
     }
-    @RequestMapping(value = "/listcommitters", method = RequestMethod.GET)
-    public String listBooks(
-            Model model,@RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size,
-            @RequestParam("git") String git,
-            @RequestParam("repo") String repo) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
-        List<Committer> repository = httpconnections.repositoryByRepoName(git,repo);
-        Page<Committer> bookPage = userService.findPaginated(PageRequest.of(currentPage - 1, pageSize),
-                repository);
 
-        model.addAttribute("bookPage", bookPage);
-
-        int totalPages = bookPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-            model.addAttribute("gituser",git);
-
-        }
-
-        return "listcommitters.html";
-    }
     @GetMapping("/repository")
     public String repository(){
         return "repository";
     }
-
     @GetMapping("/login?logout")
     public String logout(){
         System.out.println("Log out...1");
         return "login";
     }
-
-
 }

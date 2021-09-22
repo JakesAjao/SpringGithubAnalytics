@@ -15,21 +15,47 @@
             <div class="col-md-12">
                 <div class="main-card mb-3 card">
                     <div class="table-responsive" style="height: 600px;overflow: scroll;">
-                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                        <table border="1" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                            <thead>
                             <tr>
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Date</th>
                             </tr>
-                            <tr th:each="repo: ${repository}">
-                                <td class="text-center" th:text="${repo.name}">Spring in Action</td>
-                                <td class="text-center" th:text="${repo.email}">Spring in Action</td>
-                                <td class="text-center" th:text="${repo.date}">Spring in Action</td>
+                            </thead>
+                            <tbody>
+                            <tr th:each="commit, iStat : ${committerPage.content}"
+                                th:style="${iStat.odd}? 'font-weight: bold;'"
+                                th:alt-title="${iStat.even}? 'even' : 'odd'">
+                                <td th:text="${commit.name}" />
+                                <td th:text="${commit.email}" />
+                                <td th:text="${commit.date}" />
                             </tr>
-
-                            </tr>
-                            <!--                                            </tbody>-->
+                            </tbody>
                         </table>
+                        <div th:if="${committerPage.totalPages > 0}" class="pagination"
+                             th:each="pageNumber : ${pageNumbers}">
+                            <a th:href="@{/listcommitters(size=${committerPage.size}, page=${pageNumber},
+                            git=${git}, repo=${repo.name})}"
+                               th:text=${pageNumber}
+                               th:class="${pageNumber==committerPage.number + 1} ? active"></a>
+                        </div>
+
+<!--                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">-->
+<!--                            <tr>-->
+<!--                                <th class="text-center">Name</th>-->
+<!--                                <th class="text-center">Email</th>-->
+<!--                                <th class="text-center">Date</th>-->
+<!--                            </tr>-->
+<!--                            <tr th:each="repo: ${repository}">-->
+<!--                                <td class="text-center" th:text="${repo.name}">Spring in Action</td>-->
+<!--                                <td class="text-center" th:text="${repo.email}">Spring in Action</td>-->
+<!--                                <td class="text-center" th:text="${repo.date}">Spring in Action</td>-->
+<!--                            </tr>-->
+
+<!--                            </tr>-->
+<!--                            &lt;!&ndash;                                            </tbody>&ndash;&gt;-->
+<!--                        </table>-->
                     </div>
 
 <!--                    <div class="d-block text-center card-footer">-->
