@@ -53,7 +53,10 @@ public class HomeController {
         modelAndView.setViewName("repository");
 
         List<Committer> repository = httpconnections.repositoryByRepoName(git,repo);
-        modelAndView.addObject("repository",repository);
+        if (repository==null)
+        modelAndView.addObject("repository","");
+        else
+            modelAndView.addObject("repository",repository);
         modelAndView.addObject("gituser",git);
         return modelAndView;
     }

@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                        "/home**",
                         "/registration**",
                         "/repository**",
+                        "/analytic**",
                         "/repository/user/{git}/name/{repo}**",
                         "/layout**",
                         "/assets/**",
