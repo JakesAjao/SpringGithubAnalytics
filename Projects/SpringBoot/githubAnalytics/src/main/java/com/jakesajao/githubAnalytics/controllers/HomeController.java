@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,7 +49,9 @@ public class HomeController {
 //    }
 
     @GetMapping("/repository/user/{git}/name/{repo}")
-    public ModelAndView repository(@PathVariable("git") String git,@PathVariable("repo")String repo) {
+    public ModelAndView repository(@PathVariable("git") String git, @PathVariable("repo")String repo, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(true);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("repository");
@@ -57,6 +61,7 @@ public class HomeController {
         modelAndView.addObject("repository","");
         else
             modelAndView.addObject("repository",repository);
+        session.setAttribute("committerList", repository);
         modelAndView.addObject("gituser",git);
         return modelAndView;
     }
