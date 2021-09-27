@@ -1,5 +1,6 @@
 package com.jakesajao.githubAnalytics.controllers;
 
+import com.jakesajao.githubAnalytics.models.Chart;
 import com.jakesajao.githubAnalytics.models.Committer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,43 +15,59 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Controller
 public class AnalyticController {
     private static final Random RANDOM = new Random(System.currentTimeMillis());
 
+    private static Map<String, Integer> committerNoOfOccurence;
     @GetMapping("/analytic")
     public String Analytic(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         List<Committer> committerList = (List<Committer>)  session.getAttribute("committerList");
         System.out.println("Sesssion commiter list: "+committerList.size());
+
+        countFrequencies(committerList);
+
         model.addAttribute("chartData", getChartData());
-        System.out.println("Get Chart Data controller");
+        //System.out.println("Get Chart Data controller");
         return "analytic";
     }
-    private List<List<Object>> getChartData() {
-        System.out.println("Get Chart Data controller 2");
-        return List.of(
-                List.of("Mushrooms", RANDOM.nextInt(5)),
-                List.of("Onions", RANDOM.nextInt(5)),
-                List.of("Olives", RANDOM.nextInt(5)),
-                List.of("Zucchini", RANDOM.nextInt(5)),
-                List.of("Pepperoni", RANDOM.nextInt(5))
-        );
+
+    private List<Object> getChartData() {
+        List<Object>paraList= new ArrayList<>();
+
+        System.out.println("committerNoOfOccurence string: "+committerNoOfOccurence.toString());
+        for (Map.Entry<String, Integer> val : committerNoOfOccurence.entrySet()) {
+            String[] arr =new String[2];
+            String key = val.getKey();
+            arr[0] = key;
+            arr[1] = val.getValue().toString();
+
+            List<String> list = Arrays.asList(arr);
+
+            paraList.add(list);
+        }
+       return paraList;
     }
-    public static void countFrequencies(ArrayList<String> list)
+    public static Map<String, Integer> countFrequencies(List<Committer> list)
     {
-        // hash set is created and elements of
-        // arraylist are insertd into it
-        Set<String> st = new HashSet<String>(list);
-        for (String s : st)
-            System.out.println(s + ": " + Collections.frequency(list, s));
+        // hashmap to store the frequency of element
+        Map<String, Integer> hm = new HashMap<String, Integer>();
+
+        for (Committer i : list) {
+            Integer j = hm.get(i.getName());
+            hm.put(i.getName(), (j == null) ? 1 : j + 1);
+        }
+        // displaying the occurrence of elements in the arraylist
+        for (Map.Entry<String, Integer> val : hm.entrySet()) {
+            System.out.println("Element " + val.getKey() + " "
+                    + "occurs"
+                    + ": " + val.getValue() + " times");
+        }
+        committerNoOfOccurence = hm;
+        return hm;
     }
-//    public static void main(String[] args)
-//    {
-//        ArrayList<String> list = new ArrayList<String>();
-//        list.add("Geeks");
-//        list.add("for");
-//        list.add("Geeks");
-//        countFrequencies(list);
-//    }
 }

@@ -20,11 +20,10 @@
         // instantiates the pie chart, passes in the data and
         // draws it.
         function drawChart() {
-
             // Create the data table.
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Topping');
-            data.addColumn('number', 'Slices');
+            data.addColumn('string', 'Slices');
             data.addRows([
                 /*[# th:each="row : ${chartData}"]*/
                 [[${row}]],
@@ -32,7 +31,7 @@
             ]);
 
             // Set chart options
-            var options = {'title':'How Much Pizza I Ate Last Night',
+            var options = {'title':'No of Commits per user.',
                 'width':400,
                 'height':300};
 
