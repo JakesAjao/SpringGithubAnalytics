@@ -46,10 +46,11 @@ public class AnalyticController {
             arr[0] = key;
             arr[1] = val.getValue().toString();
 
-            List<String> list = Arrays.asList(arr);
+            List<Object> list = Arrays.asList(arr);
 
             paraList.add(list);
         }
+        System.out.println("param List string: "+paraList);
        return paraList;
     }
     public static Map<String, Integer> countFrequencies(List<Committer> list)
