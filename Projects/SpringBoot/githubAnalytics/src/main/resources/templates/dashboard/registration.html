@@ -86,6 +86,14 @@
                         <input class="input--style-3" type="text" id="mobilephone" placeholder="Mobile Phone" name="mobilephone">
                         <p style="color:red" th:each="error: ${#fields.errors('mobilephone')}" th:text="${error}">Validation error</p>
                     </div>
+                    <div th:classappend="${#fields.hasErrors('role')}? 'has-error':''">
+                        <label for="role" style="color:white">Choose a Role:</label>
+                        <select name="role" id="role" >
+                            <option value="ROLE_USER">ROLE_USER</option>
+                            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        </select>
+                        <p style="color:red" th:each="error: ${#fields.errors('role')}" th:text="${error}">Validation error</p>
+                    </div>
                     <div class="p-t-10">
                         <button class="btn btn--pill btn--green" type="submit">Submit</button>
                     </div>

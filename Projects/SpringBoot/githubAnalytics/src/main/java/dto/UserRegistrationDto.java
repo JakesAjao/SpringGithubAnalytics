@@ -33,6 +33,9 @@ public class UserRegistrationDto {
     @NotEmpty
     private String mobilephone;
 
+
+    private String role;
+
     @Email
     @NotEmpty
     private String confirmEmail;
@@ -75,6 +78,13 @@ public class UserRegistrationDto {
         this.confirmPassword = confirmPassword;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getEmail() {
         return email;

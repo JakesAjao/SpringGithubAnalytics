@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-
     public GitUser save(UserRegistrationDto registration) {
         GitUser user = new GitUser();
         user.setFirstName(registration.getFirstName());
@@ -49,7 +48,9 @@ public class UserServiceImpl implements UserService {
        // user.setGender(registration.getGender());
         user.setMobilephone(registration.getMobilephone());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
-        user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+        //user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+        System.out.println("Save Role as : "+registration.getRole());
+        user.setRoles(Arrays.asList(new Role(registration.getRole())));
         return userRepository.save(user);
     }
 
