@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
+There is a knowi 
 @Service
 public class GitUserDetails implements UserDetails {
     private GitUser user;
