@@ -20,16 +20,24 @@
                         <input type="text" id="myInput" onkeyup="myFunction()"  placeholder="Type to search for name">
                         <table id="myTable" class="align-middle mb-0 table table-borderless table-striped table-hover">
                             <tr>
-                                <th class="text-center">Id</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Description</th>
-                                <th class="text-center">Action</th>
+                                <th>Id</th>
+                                <th>FirstName</th>
+                                <th>LastName</th>
+                                <th>MobilePhone</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Action</th>
                             </tr>
-                            <tr th:each="repo: ${repolist}">
-                                <td th:text="${repo.id}">2</td>
-                                <td th:text="${repo.name}">Spring in Action</td>
-                                <td th:text="${repo.description}">Spring in Action</td>
-                                <td><a th:href="@{'/repository/user/'+${git}+'/name/'+${repo.name}}">Details</a></td>
+                            <tr th:each="user: ${userList}">
+                                <td th:text="${user.id}">2</td>
+                                <td th:text="${user.firstName}">Spring </td>
+                                <td th:text="${user.lastName}"> Action</td>
+                                <td th:text="${user.mobilephone}">070888888888</td>
+                                <td th:text="${user.email}">sprin@gmail.com</td>
+                                <td th:text="${user.role}">admin</td>
+                                <td><a th:href="@{'/user/edit/' + ${user.email}+'/name/'+${user.firstName}}">Edit</a></td>
+                                <td><a th:href="@{'/user/delete/' + ${user.email}+'/name/'+${user.firstName}}">Delete</a></td>
+<!--                                <td><a th:href="@{'/repository/user/'+${git}+'/name/'+${repo.name}}">Details</a></td>-->
 
                             </tr>
 

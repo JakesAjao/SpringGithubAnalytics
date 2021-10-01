@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,6 +47,31 @@ public class HomeController {
 //
 //        return modelAndView;
 //    }
+
+    @RequestMapping(value= "/user/edit/{email}", method = RequestMethod.GET)
+    public String updateAuthor(@PathVariable("email")String email, ModelMap model,HttpServletRequest request){
+        HttpSession session = request.getSession(true);
+        GitUser gitUser = userRepository.findByEmail(email);
+        model.put("gitUser", gitUser);
+        return "editauthor";
+    }
+    @GetMapping("/user/edit/{email}/name/{name}")
+    public ModelAndView user(@PathVariable("email") String git, @PathVariable("name")String repo, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(true);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("repository");
+
+        List<Committer> repository = httpconnections.repositoryByRepoName(git,repo);
+        if (repository==null)
+            modelAndView.addObject("repository","");
+        else
+            modelAndView.addObject("repository",repository);
+        session.setAttribute("committerList", repository);
+        modelAndView.addObject("gituser",git);
+        return modelAndView;
+    }
 
     @GetMapping("/repository/user/{git}/name/{repo}")
     public ModelAndView repository(@PathVariable("git") String git, @PathVariable("repo")String repo, HttpServletRequest request) {

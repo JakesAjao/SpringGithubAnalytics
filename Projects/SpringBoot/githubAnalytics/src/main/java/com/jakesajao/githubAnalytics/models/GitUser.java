@@ -16,6 +16,35 @@ public class GitUser {
     private String password;
     private String mobilephone;
 
+
+    @Transient
+    private String role;
+
+    public GitUser(){
+
+    }
+    public GitUser(long id,String firstName,String lastName, String email, String mobilephone,String roles) {
+
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        // this.gender = gender;
+        this.email = email;
+        this.mobilephone = mobilephone;
+        this.role= roles;
+    }
+
+    public GitUser(long id,String firstName,String lastName, String email, String mobilephone,Collection<Role> roles) {
+
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        // this.gender = gender;
+        this.email = email;
+        this.mobilephone = mobilephone;
+        this.roles = roles;
+    }
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -31,11 +60,10 @@ public class GitUser {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-               // ", gender='" + gender + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                //", password='" + password + '\'' +
                 ", mobilephone='" + mobilephone + '\'' +
-                ", roles=" + roles +
+                ", roles=" + role +
                 '}';
     }
 
@@ -55,19 +83,12 @@ public class GitUser {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    public GitUser() {
+    public String getRole() {
+        return role;
     }
-    public GitUser(String firstName,String lastName, String password,String email, String mobilephone,Collection<Role> roles) {
 
-        //this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-       // this.gender = gender;
-        this.password = password;
-        this.email = email;
-        this.mobilephone = mobilephone;
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Long getId() {

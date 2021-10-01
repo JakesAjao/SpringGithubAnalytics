@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -73,13 +74,14 @@ public class LoginController {
         String roleVal = getRole(gitUser.getRoles());
 
         if (roleVal.equals("ROLE_ADMIN")){
-            System.out.println("ROLE 1: " + roleVal);
+            List<GitUser> userList = userRepository.findAll();
+            List<GitUser> userList2  = getUserList(userList);
+
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("ahome");
             String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
             String email = gitUser.getEmail();
-            List<Repository> repoList = httpconnections.getUserRepo(gitUser.getFirstName()+gitUser.getLastName());
-            modelAndView.addObject("repolist",repoList);
+            modelAndView.addObject("userList",userList2);
             modelAndView.addObject("gituser",name);
             modelAndView.addObject("git",gitUser.getFirstName()+gitUser.getLastName());
 
@@ -91,13 +93,16 @@ public class LoginController {
         modelAndView.setViewName("home");
         String name = gitUser.getFirstName() +" "+ gitUser.getLastName();
         String email = gitUser.getEmail();
+
         List<Repository> repoList = httpconnections.getUserRepo(gitUser.getFirstName()+gitUser.getLastName());
+        System.out.println("repoList: " + repoList);
         modelAndView.addObject("repolist",repoList);
         modelAndView.addObject("gituser",name);
         modelAndView.addObject("git",gitUser.getFirstName()+gitUser.getLastName());
 
         return modelAndView;
     }
+
     private String getRole(Collection<Role> roleList){
         for(Role role: roleList) {
 
@@ -112,6 +117,21 @@ public class LoginController {
         }
         else
             return null;
+    }
+    private List<GitUser> getUserList(List<GitUser> userList){
+        List<GitUser> userList2 = new ArrayList<>();
+        for(var user:userList){
+            System.out.println("User role: " + user.getRole());
+            String roleVal2 = null;
+            for(Role role:user.getRoles()){
+                roleVal2 = role.getName();
+            }
+            System.out.println("User role name 2: " +  roleVal2);
+            GitUser userData = new GitUser(user.getId(),user.getFirstName(),user.getLastName(),
+                    user.getEmail(),user.getMobilephone(), roleVal2);
+            userList2.add(userData);
+        }
+        return userList2;
     }
 //    @RequestMapping(value="/login",method= RequestMethod.POST)
 //    public ModelAndView index(@ModelAttribute("user") GitUser gituser) {
