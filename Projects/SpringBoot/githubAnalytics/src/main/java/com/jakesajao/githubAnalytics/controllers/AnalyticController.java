@@ -27,6 +27,11 @@ public class AnalyticController {
     public String Analytic(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         List<Committer> committerList = (List<Committer>)  session.getAttribute("committerList");
+        if (committerList==null){
+            System.out.println("Kindly click Details button first. ");
+            committerList = null;
+        }
+        else
         System.out.println("Sesssion commiter list: "+committerList.size());
 
         countFrequencies(committerList);

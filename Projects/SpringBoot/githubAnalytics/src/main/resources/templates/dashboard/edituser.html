@@ -1,0 +1,71 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="alayout">
+<div layout:fragment="content">
+    <!--Content of the page-->
+    <div class="app-main__inner">
+        <div class="row">
+        </div>
+        <div class="row">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="table-responsive" style="height: 600px;overflow: scroll;">
+
+                        <body>
+                        <h1>Edit User</h1>
+                        <form action="#" th:action="@{/updateuser}" th:object="${user}" method="post">
+                            <div class="form-control">
+                                <label class="header"> Author Id <span>:</span></label>
+                                <input type="text" id="id" th:field="*{id}"/>
+                            </div>
+
+                            <div class="form-control">
+                                <label class="header">First Name <span>:</span></label>
+                                <input type="text" id="firstName" th:field="*{firstName}" required=""/>
+                            </div>
+
+                            <div class="form-control">
+                                <label class="enquiry">Last Name <span>:</span></label>
+                                <input type="text" id="lastName" th:field="*{lastName}"></input>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-control">
+                                <label class="enquiry">Mobilephone <span>:</span></label>
+                                <input type="text" id="mobilephone" th:field="*{mobilephone}"></input>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-control">
+                                <label class="enquiry">Email <span>:</span></label>
+                                <input type="text" id="email" th:field="*{email}"></input>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="form-control">
+                                <label class="enquiry">Role <span>:</span></label>
+                                <input type="text" id="role" th:field="*{role}"></input>
+                                <div class="clear"></div>
+                            </div>
+
+                            <div class="form-control">
+                                <input type="reset" class="reset" value="Reset"/>
+                                <input type="submit" class="register" value="save changes"/>
+                                <div class="clear"></div>
+                            </div>
+                        </form>
+                        </body>
+                    </div>
+
+                    <div class="d-block text-center card-footer">
+                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger"><i class="pe-7s-trash btn-icon-wrapper"> </i></button>
+                        <button class="btn-wide btn btn-success">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

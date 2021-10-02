@@ -68,6 +68,21 @@ public class UserServiceImpl implements UserService {
                 user.getPassword(),
                 mapRolesToAuthorities(user.getRoles()));
     }
+    public void UpdateUser(GitUser user){
+        if (user==null){
+            System.out.println("User is empty.");
+            return;
+        }
+        user.setFirstName(user.getFirstName());
+        user.setLastName(user.getLastName());
+        user.setMobilephone(user.getMobilephone());
+        user.setEmail(user.getEmail());
+        List<Role> role = new ArrayList<>();
+        role.add(new Role(user.getRole()));
+        user.setRoles(role);
+        userRepository.save(user);
+        System.out.println("User Saved successfully. User: "+user);
+    }
     public User getCurrentUser(Principal principal){
         return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }

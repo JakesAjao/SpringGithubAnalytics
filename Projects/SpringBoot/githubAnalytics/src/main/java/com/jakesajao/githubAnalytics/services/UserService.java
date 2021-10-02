@@ -25,6 +25,7 @@ public interface UserService extends UserDetailsService {
     UserDetails loadUserByUsername(String email);
     Page<Committer> findPaginated(Pageable pageable,List<Committer> repository);
     Paged<Committer> getPage(int pageNumber, int size,String git,String repo);
+    void UpdateUser(GitUser user);
 }
 /*
 

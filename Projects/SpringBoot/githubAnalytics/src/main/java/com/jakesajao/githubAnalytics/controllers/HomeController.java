@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,13 +48,34 @@ public class HomeController {
 //
 //        return modelAndView;
 //    }
-
-    @RequestMapping(value= "/user/edit/{email}", method = RequestMethod.GET)
-    public String updateAuthor(@PathVariable("email")String email, ModelMap model,HttpServletRequest request){
-        HttpSession session = request.getSession(true);
-        GitUser gitUser = userRepository.findByEmail(email);
-        model.put("gitUser", gitUser);
-        return "editauthor";
+    @RequestMapping(value= "/user/edit/{email}/role/{role}", method = RequestMethod.GET)
+    public String updateAuthor(@PathVariable("email")String email,@PathVariable("role")String role,
+                               ModelMap model){
+        GitUser user = userRepository.findByEmail(email);
+        user.setRole(role);
+        model.put("user", user);
+        return "edituser";
+}
+    @RequestMapping(value= "/updateuser", method = RequestMethod.POST)
+    public String saveUser(@ModelAttribute("user") GitUser user, BindingResult result, ModelMap model, HttpServletRequest request){
+        if (result.hasErrors()) {
+            return "redirect:/user";
+        }
+        System.out.println("First NAME: "+user.getFirstName());
+        System.out.println("Last NAME: "+user.getLastName());
+        userService.UpdateUser(user);
+        return  "redirect:/user";
+    }
+    @GetMapping("/user")
+    public String getAuthor(Model model){
+        return "redirect:/";
+    }
+    @GetMapping(value= "/user/delete/{userId}")
+    public String deleteAuthor(@PathVariable("userId")Long userId,Model model){
+        GitUser user = userRepository.getById(userId);
+        userRepository.delete(user);
+        System.out.println("User deleted successfully.");
+        return "redirect:/user";
     }
     @GetMapping("/user/edit/{email}/name/{name}")
     public ModelAndView user(@PathVariable("email") String git, @PathVariable("name")String repo, HttpServletRequest request) {
