@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
+import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,37 +23,26 @@ public class BootsrapCommandRunner {
  private AttendanceRepository attendanceRepository;
    @Autowired
    private MemberRepository memberRepository;
-    //@Bean
+   // @Bean
     CommandLineRunner commandLineRunner() {
         return args -> {
             Attendance attendance = new Attendance();
-            attendance.setStatus("No");
+            attendance.setPresent("No");
             //attendance.setId(3L);
             attendance.setCreatedDate(LocalDate.now());
+            List<MemberAttend>memberList = attendanceRepository.FindMemberAttendanceByCategory("No");
 
-            List<MemberAttend> attendList2 = attendanceRepository.findMemberAttend();//To be displayed as a list to users
-            System.out.println("Attendance List: " + attendList2);
-
-            SaveMemberAttendance_NewWeek();//To be run once everytime you loop attendance page
-
-            LocalDate eventDate = LocalDate.now();
-            String status = "Yes";
-            Long id = 3L;
-            UpdateMemberAttendance_NewWeek(status,eventDate,id); //To be run after attendance status update
-
-
-               // List<Attendance> attendanceList = attendanceRepository.findAll();
-            //System.out.println("Member Data List: " + attendanceList.toString());
-            //List<Member> memberList = memberRepository.findAll();
-            //for(Member member: memberList){
-               //System.out.println("Joined Member: " + member);
-            //List<MemberAttend> memberList2 = memberRepository.findMemberAttend();
-            //System.out.println("Joined Member List: " + memberList2);
-
-            List<MemberAttend> MemberList = attendanceRepository.findMemberQuery();//fetch id alone fine
-            System.out.println("Member Only List: " + MemberList);
+            LocalDate date = LocalDate.now().minusDays(40);
+            List<MemberAttend> memberPresentDateList = attendanceRepository.FindMemberAttendanceByCategoryAndDate(
+                    "No",date);
+            System.out.println("memberPresentDateList: "+memberPresentDateList);
 
         };
+    }
+    private int WeekOftheYear(int year, int month, int day){
+        LocalDate date = LocalDate.of(year, month, day);
+        int weekOfYear = date.get(ChronoField.ALIGNED_WEEK_OF_YEAR);
+        return weekOfYear;
     }
     public void SaveMemberAttendance_NewWeek(){
         LocalDate currentDate = LocalDate.now();
@@ -63,7 +53,7 @@ public class BootsrapCommandRunner {
                 Optional<Member> memberObj = memberRepository.findById(memberAttend.getId());
                 Attendance attend = new Attendance();
                 attend.setMember(memberObj.get());
-                attend.setStatus("No");
+                attend.setPresent("No");
                 attend.setCreatedDate(currentDate);
             attendanceRepository.save(attend);
             System.out.println("Attendance saved successfully! ");

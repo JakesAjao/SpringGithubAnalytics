@@ -20,7 +20,8 @@
                                 <div style ="color:green;" th:if="${param.success}">
                                     <div>You've successfully added a member!</div>
                                 </div>
-                                <form th:action="@{/add}" class="my-login-validation" th:object="${member}" method="POST">
+                                <p th:text="${response2}" style="color:green;"></p>
+                                <form th:action="@{/add}" class="my-login-validation" th:object="${memberCreationDto}" method="POST">
                                    <p style="color:red" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error
                                     </p>
                                 <div class="form-group">
@@ -62,14 +63,14 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="mobilephone1">Mobilephone 1</label>
-                                        <input type="text" class="form-control" id="mobilephone1" name="mobilephone1" placeholder="07066666666">
+                                        <input type="number" maxlength="11" class="form-control" id="mobilephone1" name="mobilephone1" placeholder="07066666666">
                                         <p style="color:red" th:each="error: ${#fields.errors('mobilephone1')}" th:text="${error}">
                                             Mobile phone 1
                                         </p>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="mobilephone2">Mobilephone 2</label>
-                                        <input type="text" class="form-control" id="mobilephone2" name="mobilephone2" placeholder="07077777777">
+                                        <input type="number" maxlength="11" class="form-control" id="mobilephone2" name="mobilephone2" placeholder="07077777777">
                                     </div>
                                 </div>
                                 <div class="form-row">

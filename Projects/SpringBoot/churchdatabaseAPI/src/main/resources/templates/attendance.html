@@ -24,12 +24,17 @@
                         </div>
                         <p>Type something in the input field to search the table for first names, last names:</p>
                         <input class="form-control" id="myInput" type="text" placeholder="Search..">
-
-                        <div th:if="${param.success}">
-                            <div style="color:green">You've successfully updated the attendance!</div>
+                        <div th:if="${error=='The Week selected is invalid.'}">
+                            <div class="alert alert-danger">The Week Selected is invalid.
+                            </div>
                         </div>
-                        <div th:if="${param.fail}">
-                            <div style="color:red">Attendance update fail!</div>
+                        <div th:if="${error=='The Category selected is invalid.'}">
+                            <div class="alert alert-danger">The Category Selected is invalid.
+                            </div>
+                        </div>
+                        <div th:if="${success=='Report generated successfully!'}">
+                            <div class="alert alert-primary">Report generated successfully!
+                            </div>
                         </div>
                         <form th:action="@{/attendance}" method="post" th:object="${form}">
                         <div class="container">
@@ -39,9 +44,9 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">Present</th>
+                                            <th scope="col">Title</th>
                                             <th scope="col">First Name</th>
                                             <th scope="col">Last Name</th>
-<!--                                            <th scope="col">Mobilephone</th>-->
                                             <th scope="col">Gender</th>
                                             <th scope="col">Date</th>
                                         </tr>
@@ -49,25 +54,24 @@
                                         <tbody>
                                         <tr th:each="attend,itemStat  : *{attends}">
                                             <td>
-                                                <input type="checkbox" th:field="*{attends[__${itemStat.index}__].present}" th:checked="${attend.present}" th:value="${attend.id}" />
+                                                <input type="checkbox" th:field="*{attends[__${itemStat.index}__].present1}" th:checked="${attend.present1}" th:value="${attend.id}" />
                                             </td>
                                             <input hidden th:field="*{attends[__${itemStat.index}__].id}"  />
                                             <input hidden th:field="*{attends[__${itemStat.index}__].createdDate}"  />
+                                            <td th:text="${attend.title}">Title</td>
                                             <td th:text="${attend.firstName}">First Name</td>
                                             <td th:text="${attend.lastName}">last Name</td>
 <!--                                            <td th:text="${attend.mobilephone1}">Mobilephone1</td>-->
                                             <td th:text="${attend.gender}">Gender</td>
                                             <td th:text="${attend.createdDate}">Date</td>
                                         </tr>
-
-
                                         </tbody>
                                     </table>
 
                                 </div>
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-primary" >Update</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                                 <button type="reset" class="btn btn-primary" id="resetButton" name="reset" th:value="Reset">Refresh</button>
                             </div>
                         </div>

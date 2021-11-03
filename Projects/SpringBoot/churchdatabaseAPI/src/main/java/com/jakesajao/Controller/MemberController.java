@@ -35,85 +35,39 @@ public class MemberController {
     private MemberService memberService;
     private AttendanceServiceImpl attendanceServiceImpl;
 
-    public MemberController(AttendanceRepository attendanceRepository, AttendanceServiceImpl attendanceServiceImpl) {
+    @ModelAttribute("memberCreationDto")
+    public MemberCreationDto memberCreationDto() {
+        return new MemberCreationDto();
+    }
+    public MemberController(AttendanceRepository attendanceRepository) {
         this.attendanceRepository = attendanceRepository;
-        this.attendanceServiceImpl = attendanceServiceImpl;
     }
     @GetMapping("/add")
     public String addMember(Model model) {
         return "add";
     }
 
-    @GetMapping("/attendance")
-    public String updateMember(Model model) {
-        List<MemberAttend> memberAttendList2 = new ArrayList<>();
-       List<MemberAttend> memberAttendList = attendanceRepository.findMemberAttend();//To be displayed as a list to users
-
-        attendanceServiceImpl.SaveMemberAttendance_NewWeek();
-        memberAttendList.forEach(memberAttend -> {
-            if (memberAttend.getStatus().equals("Yes")) {
-                memberAttend.setPresent(true);
-            }
-            else{
-                memberAttend.setPresent(false);
-            }
-                MemberAttend memberAttend1 = new MemberAttend(memberAttend.getId(), memberAttend.getFirstName(),
-                        memberAttend.getLastName(), memberAttend.getPresent(), memberAttend.getGender(),memberAttend.getCreatedDate());
-                memberAttendList2.add(memberAttend1);
-
-        });
-
-        MemberAttendDto attendDto = new MemberAttendDto();
-        memberAttendList2.forEach(memberAttend -> {
-            attendDto.addMemberAttend(memberAttend);
-        });
-
-        System.out.println("attendDto List: " + attendDto);
-        model.addAttribute("form", attendDto);
-
-        return "attendance";
-    }
-    @PostMapping("/attendance")
-    public String postAttendance(@ModelAttribute MemberAttendDto form,Model model){
-
-        System.out.println("form: "+form);
-        List<MemberAttend> attendList = form.getAttends();
-        final int[] response = new int[1];
-        attendList.forEach(attend->{
-            if (attend.getPresent()==true) {
-                attend.setStatus("Yes");
-                response[0] = attendanceServiceImpl.UpdateMemberAttendance_NewWeek(attend.getStatus(), attend.getCreatedDate(), attend.getId());
-                System.out.println("Posted successfully id: " + attend.getId());
-            }
-            else {
-                attend.setStatus("No");
-                response[0] = attendanceServiceImpl.UpdateMemberAttendance_NewWeek(attend.getStatus(), attend.getCreatedDate(), attend.getId());
-                System.out.println("Posted successfully id: " + attend.getId());
-            }
-        });
-        
-        return "redirect:/attendance?success";
-
-    }
     @PostMapping("/add")
-    public String addNewMember(@ModelAttribute("memberAttend") @Valid MemberCreationDto memberDto,
-                               BindingResult result) {
+    public String addNewMember(@ModelAttribute @Valid MemberCreationDto memberCreationDto,
+                               BindingResult result,Model model) {
         System.out.println("Entry member");
-        Member existing = memberService.findByMobilePhone1(memberDto.getMobilephone1());
+        Member existing = memberService.findByMobilePhone1(memberCreationDto.getMobilephone1());
         if (existing != null) {
             System.out.println("existing  null: "+existing);
-            result.rejectValue("mobilephone1", null, "There is already a member created with that mobile phone.");
+            String msg = "There is already a member created with that mobile phone.";
+            result.rejectValue("mobilephone1", null, msg);
+            model.addAttribute("error",msg);
+            return "add";
         }
         if (result.hasErrors()) {
             System.out.println("result.hasErrors(): "+result.toString());
+            model.addAttribute("error1","Error: "+result.toString());
             return "add";
         }
-        memberService.save(memberDto);
+        memberService.save(memberCreationDto);
+        model.addAttribute("success","You've successfully updated the attendance!");
 
-        return "redirect:/add?success";
+        return "add";
 
     }
-
-
-
 }
