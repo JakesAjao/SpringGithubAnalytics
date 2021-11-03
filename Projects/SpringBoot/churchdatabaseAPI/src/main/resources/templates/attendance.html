@@ -36,6 +36,10 @@
                             <div class="alert alert-primary">Report generated successfully!
                             </div>
                         </div>
+                        <div th:if="${success2=='Attendance updated successfully!'}">
+                            <div class="alert alert-primary">Attendance updated successfully!
+                            </div>
+                        </div>
                         <form th:action="@{/attendance}" method="post" th:object="${form}">
                         <div class="container">
                             <div class="row">
