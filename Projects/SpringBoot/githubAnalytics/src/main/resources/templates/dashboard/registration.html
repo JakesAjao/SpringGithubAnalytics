@@ -23,12 +23,18 @@
      th:href="@{/assets/css/font-awesome.min.css}" />
     <link rel="stylesheet" type="text/css"  href="../static/assets/css/mainregister.css" media="all"
           th:href="@{/assets/css/mainregister.css}" />
+    <link rel="stylesheet" type="text/css"  href="../static/assets/css/daterangepicker.css" media="all"
+          th:href="@{/assets/css/daterangepicker.css}" />
     <!-- Font special for pages-->
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link rel="stylesheet" type="text/css"  href="../static/assets/css/select2.min.css" media="all"
           th:href="@{/assets/css/select2.min.css}" />
 
     <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/util.css"
+          th:href="@{/assets/css/util.css}" />
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/main2.css"
+          th:href="@{/assets/css/main2.css}" />
 
 <!--    <link href="css/main.css" rel="stylesheet" media="all">-->
 </head>
@@ -42,30 +48,51 @@
 
             <div class="card-body">
                 <h2 class="title">Registration Info</h2>
-                <form method="POST">
-                    <div class="input-group">
-                        <input class="input--style-3" type="text" placeholder="Name" name="name">
+                <a class="navbar-brand" href="#" th:href="@{/}">Registration and
+                    Login Module
+                </a>
+                <div th:if="${param.success}">
+                    <div style="color:green">You've successfully registered to our awesome app!</div>
+                </div>
+                <form th:action="@{/registration}" th:object="${user}" method="post">
+                    <p style="color:red" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error
+                    </p>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
+                        <input class="input--style-3" type="text"  id="firstName"  th:field="*{firstName}" placeholder="First Name" name="first Name">
+                        <p style="color:red" th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation error</p>
                     </div>
-                    <div class="input-group">
-                        <input class="input--style-3 js-datepicker" type="text" placeholder="Birthdate" name="birthday">
-                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
+                        <input class="input--style-3" type="text"  id="lastName"  th:field="*{lastName}" placeholder="Last Name" name="lastName">
+                        <p style="color:red" th:each="error: ${#fields.errors('lastName')}" th:text="${error}">Validation error</p>
                     </div>
-                    <div class="input-group">
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select name="gender">
-                                <option disabled="disabled" selected="selected">Gender</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                                <option>Other</option>
-                            </select>
-                            <div class="select-dropdown"></div>
-                        </div>
+
+                    <div class="input-group" th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+                        <input class="input--style-3" id="email" type="email" placeholder="Email" name="email">
+                        <p style="color:red" th:each="error: ${#fields.errors('email')}" th:text="${error}">Validation error</p>
                     </div>
-                    <div class="input-group">
-                        <input class="input--style-3" type="email" placeholder="Email" name="email">
+                    <div class="input-group" th:classappend="${#fields.hasErrors('confirmEmail')}? 'has-error':''">
+                        <input class="input--style-3" id="confirmEmail" type="email" placeholder="Confirm Email" name="confirmEmail">
+                        <p style="color:red" th:each="error: ${#fields.errors('confirmEmail')}" th:text="${error}">Validation error</p>
                     </div>
-                    <div class="input-group">
-                        <input class="input--style-3" type="text" placeholder="Phone" name="phone">
+                    <div class="input-group" th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+                        <input class="input--style-3" id="password" type="password" placeholder="Password" name="password">
+                        <p style="color:red" th:each="error: ${#fields.errors('password')}" th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''">
+                        <input class="input--style-3" id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword">
+                        <p style="color:red" th:each="error: ${#fields.errors('confirmPassword')}" th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('mobilephone')}? 'has-error':''">
+                        <input class="input--style-3" type="text" id="mobilephone" placeholder="Mobile Phone" name="mobilephone">
+                        <p style="color:red" th:each="error: ${#fields.errors('mobilephone')}" th:text="${error}">Validation error</p>
+                    </div>
+                    <div th:classappend="${#fields.hasErrors('role')}? 'has-error':''">
+                        <label for="role" style="color:white">Choose a Role:</label>
+                        <select name="role" id="role" >
+                            <option value="ROLE_USER">ROLE_USER</option>
+                            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        </select>
+                        <p style="color:red" th:each="error: ${#fields.errors('role')}" th:text="${error}">Validation error</p>
                     </div>
                     <div class="p-t-10">
                         <button class="btn btn--pill btn--green" type="submit">Submit</button>
@@ -78,14 +105,14 @@
 
 <!-- Jquery JS-->
 <!--<script src="vendor/jquery/jquery.min.js"></script>-->
-<script type="text/javascript" th:src="@{/assets/scripts/vendors/jquery/jquery.min.js}" />
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <!-- Vendor JS-->
 <!--<script src="vendor/select2/select2.min.js"></script>-->
-<script type="text/javascript" th:src="@{/assets/scripts/vendor/select2/select2.min.js}" />
+<script type="text/javascript" th:src="@{/assets/scripts/select2.min.js}" />
 <!--<script src="vendor/datepicker/moment.min.js"></script>-->
-<script type="text/javascript" th:src="@{/assets/scripts/vendor/datepicker/moment.min.js}" />
+<script type="text/javascript" th:src="@{/assets/scripts/moment.min.js}" />
 <!--<script src="vendor/datepicker/daterangepicker.js"></script>-->
-<script type="text/javascript" th:src="@{/assets/scripts/vendor/datepicker/daterangepicker.js}" />
+<script type="text/javascript" th:src="@{/assets/scripts/daterangepicker.js}" />
 
 <!-- Main JS-->
 <!--<script src="js/global.js"></script>-->

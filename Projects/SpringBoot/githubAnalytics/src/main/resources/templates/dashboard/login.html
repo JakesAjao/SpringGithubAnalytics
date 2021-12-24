@@ -4,11 +4,11 @@
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-	<title>Login V16</title>
+	<title>Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="../static/assets/images/icons/favicon.ico"
 		  th:href="@{/assets/images/icons/favicon.ico}" />
 
@@ -41,26 +41,36 @@
 		  th:href="@{/assets/css/util.css}" />
 	<link rel="stylesheet" type="text/css" href="../static/assets/css/main2.css"
 		  th:href="@{/assets/css/main2.css}" />
-<!--===============================================================================================-->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+
+	<!--===============================================================================================-->
 </head>
 <body>
-	
+
 	<div class="limiter">
 		<div class="container-login100" th:style="'background: url(/assets/images/bg-01.jpg) '">
 			<div class="wrap-login100 p-t-30 p-b-50">
 				<span class="login100-form-title p-b-41">
 					Account Login
 				</span>
-				<form class="login100-form validate-form p-b-33 p-t-5">
+				<h2 class="form-signin-heading">Welcome to Jakes Ajao, please login</h2>
+				<div th:if="${param.error}">
+					<div class="alert alert-danger">Invalid username or password.
+					</div>
+				</div>
+				<div th:if="${param.logout}">
+					<div class="alert alert-info">You have been logged out.</div>
+				</div>
+				<form th:action="@{/login}" th:object="${user}"   class="login100-form validate-form p-b-33 p-t-5" method="post">
 
-					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="User name">
-						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					<div class="wrap-input100 validate-input" data-validate = "Enter firstName">
+						<input class="input100" type="text" id="email" name="email"  placeholder="Username" autofocus required>
+
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+						<input class="input100" type="password" id="password" name="password"  placeholder="Password" required>
+
 					</div>
 
 					<div class="container-login100-form-btn m-t-32">
@@ -68,29 +78,26 @@
 							Login
 						</button>
 					</div>
-
+					<div class="container-login100-form-btn m-t-32">
+                        <span>New user? <a href="/" th:href="@{/registration}">Register
+       				 here</a></span>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	
+
 
 	<div id="dropDownSelect1"></div>
-	
+
 <!--===============================================================================================-->
 
 	<script type="text/javascript" th:src="@{/assets/scripts/vendor/jquery/jquery-3.2.1.min.js}" />
-<!--===============================================================================================-->
-<!--	<script src="vendor/animsition/js/animsition.min.js"></script>-->
-
-	<script type="text/javascript" th:src="@{/assets/scripts/vendor/animsition/js/animsition.min.js}" />
-<!--===============================================================================================-->
-<!--	<script src="vendor/bootstrap/js/popper.js"></script>-->
-<!--	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>-->
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/scripts/vendor/bootstrap/js/popper.js}" />
 	<script type="text/javascript" th:src="@{/assets/scripts/vendor/bootstrap/js/bootstrap.min.js}" />
 <!--===============================================================================================-->
-<!--	<script src="vendor/select2/select2.min.js"></script>-->
 
 	<script type="text/javascript" th:src="@{/assets/scripts/vendor/select2/select2.min.js}" />
 <!--===============================================================================================-->

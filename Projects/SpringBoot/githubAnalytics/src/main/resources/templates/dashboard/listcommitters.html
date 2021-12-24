@@ -1,0 +1,70 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<div layout:fragment="content">
+    <!--Content of the page-->
+    <div class="app-main__inner">
+        <div class="row">
+        </div>
+        <div class="row">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-card mb-3 card">
+                    <div class="table-responsive" style="height: 600px;overflow: scroll;">
+                        <table border="1" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="commit, iStat : ${committerPage.content}"
+                                th:style="${iStat.odd}? 'font-weight: bold;'"
+                                th:alt-title="${iStat.even}? 'even' : 'odd'">
+                                <td th:text="${commit.name}" />
+                                <td th:text="${commit.email}" />
+                                <td th:text="${commit.date}" />
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div th:if="${committerPage.totalPages > 0}" class="pagination"
+                             th:each="pageNumber : ${pageNumbers}">
+                            <a th:href="@{/listcommitters(size=${committerPage.size}, page=${pageNumber},
+                            git=${git}, repo=${repo.name})}"
+                               th:text=${pageNumber}
+                               th:class="${pageNumber==committerPage.number + 1} ? active"></a>
+                        </div>
+
+<!--                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">-->
+<!--                            <tr>-->
+<!--                                <th class="text-center">Name</th>-->
+<!--                                <th class="text-center">Email</th>-->
+<!--                                <th class="text-center">Date</th>-->
+<!--                            </tr>-->
+<!--                            <tr th:each="repo: ${repository}">-->
+<!--                                <td class="text-center" th:text="${repo.name}">Spring in Action</td>-->
+<!--                                <td class="text-center" th:text="${repo.email}">Spring in Action</td>-->
+<!--                                <td class="text-center" th:text="${repo.date}">Spring in Action</td>-->
+<!--                            </tr>-->
+
+<!--                            </tr>-->
+<!--                            &lt;!&ndash;                                            </tbody>&ndash;&gt;-->
+<!--                        </table>-->
+                    </div>
+
+<!--                    <div class="d-block text-center card-footer">-->
+<!--                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger"><i class="pe-7s-trash btn-icon-wrapper"> </i></button>-->
+<!--                        <button class="btn-wide btn btn-success">Save</button>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

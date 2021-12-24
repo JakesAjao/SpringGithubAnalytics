@@ -1,0 +1,61 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<div layout:fragment="content">
+    <!--Content of the page-->
+    <div class="app-main__inner">
+        <div class="row">
+        </div>
+        <div class="row">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mt-5 mb-5">
+                    <table id="committers" class="table table-bordered table-responsive-sm">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="post : ${committers.page}">
+                            <td th:text="${post.name}">name</td>
+                            <td th:text="${post.email}">email</td>
+                            <td th:text="${post.date}">date</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <nav aria-label="Page navigation" class="paging">
+                        <ul class="pagination" th:if="${committers.page.totalPages > 1}">
+                            <li class="page-item" th:classappend="${!committers.paging.isPrevEnabled()? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{'/?pageNumber=' + ${committers.paging.pageNumber - 1}}"
+                                   tabindex="-1">Previous</a>
+                            </li>
+                            <th:block th:each="item : ${committers.paging.getItems()}">
+                                <li class="page-item" th:classappend="${item.index == committers++-.paging.pageNumber? 'active' : ''}"
+                                    th:if="${item.pageItemType.name() == 'PAGE'}">
+                                    <a class="page-link" th:href="@{'/?pageNumber=' + ${item.index}}"
+                                       th:text="${item.index}"></a>
+                                </li>
+                                <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                                    <a class="page-link" href="#">...</a>
+                                </li>
+                            </th:block>
+                            <li class="page-item" th:classappend="${!committers.paging.isNextEnabled()? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{'/?pageNumber=' + ${committers.paging.pageNumber + 1}}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
